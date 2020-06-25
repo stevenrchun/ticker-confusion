@@ -28,8 +28,8 @@ data = data.rename(columns={
 print(data)
 
 # Check if the SP500 looks like a solid input for our synthetic control
-data.plot()
-plt.savefig('summary.svg')
+# data.plot()
+# plt.savefig('summary.svg')
 
 # Define periods. Article came out ~2:30 EDT on May 9th so let's say treatment end of markets the friday before
 pre_period = [
@@ -45,6 +45,6 @@ post_period = [
 amc_data = data[['close_amc', 'close_voo', 'date']]
 amc_data = amc_data.set_index('date')
 
-ci = CausalImpact(amc_data, pre_period, post_period)
+ci = CausalImpact(amc_data, pre_period, post_period, prior_level_sd=None)
 ci.plot()
-print(ci.summary('report'))
+print(ci.summary('report', 5))
